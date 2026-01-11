@@ -16,7 +16,7 @@ public class PlayerConfigAuthoring : MonoBehaviour
             // Initialization of player input component
             AddComponent(entity, new PlayerMoveInput 
             {
-                moveDirecton = float2.zero 
+                inputValue = float2.zero 
             });
         }
     }

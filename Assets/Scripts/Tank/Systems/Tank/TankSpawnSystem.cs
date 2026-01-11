@@ -6,7 +6,7 @@ using Unity.Entities.UniversalDelegates;
 using Random = Unity.Mathematics.Random;
 using Unity.Rendering;
 
-[UpdateInGroup(typeof(InitializationSystemGroup))]
+[UpdateInGroup(typeof(InitializationSystemGroup), OrderFirst = true)]
 public partial struct TankSpawnSystem : ISystem
 {
     [BurstCompile]
@@ -15,21 +15,17 @@ public partial struct TankSpawnSystem : ISystem
         state.RequireForUpdate<TankConfig>();
     }
 
-
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         state.Enabled = false;
         
         var em = state.EntityManager; 
         var config = SystemAPI.GetSingleton<TankConfig>();
-
         var random = new Random(123);
 
         for (int i = 0; i < config.TankCount; i++)
         {
             var tankEntity = em.Instantiate(config.TankPrefab);
-
             var color = new URPMaterialPropertyBaseColor
             {
                 Value = RandomColor(ref random)
@@ -48,10 +44,13 @@ public partial struct TankSpawnSystem : ISystem
 
             if (i == 0)
             {
+                // Creating of the playable tank
                 em.AddComponent<PlayerTag>(tankEntity);
                 em.AddComponent<PlayerMoveInput>(tankEntity);
+                em.AddComponent<PlayerLookInput>(tankEntity);
                 em.AddComponent<FireProjectileTag>(tankEntity);
                 em.AddComponentData(tankEntity, new PlayerMoveSpeed { Value = config.PlayerTankSpeed });
+                em.AddComponentData(tankEntity, new PlayerLookSpeed { Value = config.PlayerTankLookSpeed });
             }
             else
             {

@@ -8,6 +8,7 @@ public class TankConfigAuthoring : MonoBehaviour
     public int TankCount;
     public float BallSpeed;
     public float PlayerTankSpeed;
+    public float PlayerTankLookSpeed;
 
     class TankConfigBaker : Baker<TankConfigAuthoring>
     {
@@ -21,7 +22,8 @@ public class TankConfigAuthoring : MonoBehaviour
                 CannonBallPrefab = GetEntity(authoring.CannonBallPrefab, TransformUsageFlags.Dynamic),
                 TankCount = authoring.TankCount,
                 BallSpeed = authoring.BallSpeed,
-                PlayerTankSpeed = authoring.PlayerTankSpeed 
+                PlayerTankSpeed = authoring.PlayerTankSpeed,
+                PlayerTankLookSpeed = authoring.PlayerTankLookSpeed 
             });
         }
     }

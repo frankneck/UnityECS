@@ -20,7 +20,7 @@ public partial struct PlayerMoveSystem : ISystem
         {
             ecb.SetComponent(tank, new PlayerMoveSpeed { Value = config.PlayerTankSpeed });
 
-            float3 movement = new float3(input.ValueRO.moveDirecton.x, 0.0f, input.ValueRO.moveDirecton.y)
+            float3 movement = new float3(input.ValueRO.inputValue.x, 0.0f, input.ValueRO.inputValue.y)
                 * SystemAPI.Time.DeltaTime 
                 * speed.ValueRW.Value;
             

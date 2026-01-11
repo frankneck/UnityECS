@@ -28,7 +28,9 @@ public partial class GetPlayerInputSystem : SystemBase
     protected override void OnUpdate()
     {
         var curMoveInput = _inputActions.Player.Move.ReadValue<Vector2>();
-        SystemAPI.SetSingleton(new PlayerMoveInput { moveDirecton = curMoveInput });
+        var curLookInput = _inputActions.Player.Look.ReadValue<Vector2>();
+        SystemAPI.SetSingleton(new PlayerMoveInput { inputValue = curMoveInput });
+        SystemAPI.SetSingleton(new PlayerLookInput { inputValue = curLookInput });
     }
 
     protected override void OnStopRunning()

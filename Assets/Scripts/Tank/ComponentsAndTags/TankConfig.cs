@@ -7,4 +7,5 @@ public struct TankConfig : IComponentData
     public int TankCount;
     public float BallSpeed;
     public float PlayerTankSpeed;
+    public float PlayerTankLookSpeed;
 }
