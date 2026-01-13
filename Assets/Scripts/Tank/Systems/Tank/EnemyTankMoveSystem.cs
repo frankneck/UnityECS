@@ -4,6 +4,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Entities.UniversalDelegates;
 using Unity.Transforms;
+using System.Runtime.CompilerServices;
 
 public partial struct TankMovement : ISystem
 {
@@ -33,3 +34,4 @@ public partial struct TankMovement : ISystem
         }
     }
 }
+

@@ -150,9 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankConfigAuthoring
   TankPrefab: {fileID: 4990425958046822709, guid: 30e08383bf53e0040a05a3022a85bb36, type: 3}
   CannonBallPrefab: {fileID: 1827891372464992233, guid: e5171d8373108154fa96d93815543de4, type: 3}
-  TankCount: 10000
+  TankCount: 1
   BallSpeed: 100
-  PlayerTankSpeed: 100
+  PlayerTankSpeed: 20
+  PlayerTankLookSpeed: 5
 --- !u!4 &1858949607
 Transform:
   m_ObjectHideFlags: 0

@@ -2,17 +2,17 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 [UpdateBefore(typeof(TransformSystemGroup))]
 public partial struct PlayerLookSystem : ISystem
 {
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var ecb = SystemAPI.GetSingleton<EndInitializationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
         var config = SystemAPI.GetSingleton<TankConfig>();
-        
-        foreach (var (input, speed, tank, entity) in SystemAPI.Query<RefRO<PlayerLookInput>, RefRW<PlayerMoveSpeed>, RefRW<Tank>>().WithEntityAccess().WithAll<PlayerTag>())
+
+
+        foreach (var (input, speed, tank) in SystemAPI.Query<RefRO<PlayerLookInput>, RefRW<PlayerMoveSpeed>, RefRW<Tank>>().WithAll<PlayerTag>())
         {
             speed.ValueRW.Value = config.PlayerTankLookSpeed; 
             float mx = input.ValueRO.inputValue.x;
@@ -25,8 +25,30 @@ public partial struct PlayerLookSystem : ISystem
                 turretTransform.ValueRW.Rotation = math.mul(
                     quaternion.AxisAngle(math.up(), xRotation),
                     turretTransform.ValueRW.Rotation
+                );    
+            }
+
+            float my = input.ValueRO.inputValue.y;
+
+            var camera = Camera.main.transform;
+            
+            if (my != 0)
+            {
+                float yCamera = camera.rotation.eulerAngles.x;
+                if (yCamera > 180) yCamera -= 360;
+                yCamera = Mathf.Clamp(
+                    yCamera + -my * 10f,
+                    speed.ValueRO.Value,
+                    speed.ValueRO.Value
+                );
+
+                camera.rotation = Quaternion.Euler(
+                    yCamera,
+                    camera.rotation.eulerAngles.y,
+                    camera.rotation.eulerAngles.z
                 );
             }
+
         }
     } 
 }
